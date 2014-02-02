@@ -38,9 +38,9 @@
 
 # This defined the board you are compiling for (see Configuration.h for the options)
 
-# The chaosinkl printer has a Sanguinololu with ATmega1284
 HARDWARE_MOTHERBOARD ?= 62
 MCU ?= atmega1284p
+F_CPU ?= 16000000L
 
 # Arduino source install directory, and version number
 ARDUINO_INSTALL_DIR  ?= ../../arduino-1.0
@@ -298,7 +298,7 @@ CXXINCS = ${addprefix -I ,${VPATH}}
 CDEBUG = -g$(DEBUG)
 CWARN = -Wall -Wstrict-prototypes
 CTUNING = -funsigned-char -funsigned-bitfields -fpack-struct \
-	-fshort-enums -w -ffunction-sections -fdata-sections \
+	-fshort-enums -fno-exceptions -ffunction-sections -fdata-sections \
 	-DARDUINO=$(ARDUINO_VERSION)
 ifneq ($(HARDWARE_MOTHERBOARD),)
 CTUNING += -DMOTHERBOARD=${HARDWARE_MOTHERBOARD}

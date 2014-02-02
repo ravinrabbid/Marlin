@@ -954,6 +954,7 @@ static void retract_z_probe() {
     // Retract Z Servo endstop if enabled
     #ifdef SERVO_ENDSTOPS
     if (servo_endstops[Z_AXIS] > -1) {
+    	do_blocking_move_to(current_position[X_AXIS], current_position[Y_AXIS], current_position[Z_AXIS] + Z_PROBE_RETRACT_OFFSET);
 #if defined (ENABLE_AUTO_BED_LEVELING) && (PROBE_SERVO_DEACTIVATION_DELAY > 0)
         servos[servo_endstops[Z_AXIS]].attach(0);
 #endif
@@ -1411,6 +1412,7 @@ void process_commands()
                 engage_z_probe();   // Engage Z Servo endstop if available
                 run_z_probe();
                 eqnBVector[probePointCounter] = current_position[Z_AXIS];
+                
                 retract_z_probe();
     
                 SERIAL_PROTOCOLPGM("Bed x: ");
