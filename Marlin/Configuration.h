@@ -323,7 +323,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 
 #ifdef ENABLE_AUTO_BED_LEVELING
 
-  #define Z_PROBE_RETRACT_OFFSET 10
+  #define Z_PROBE_RETRACT_OFFSET 5
 
   // these are the positions on the bed to do the probing
   #define LEFT_PROBE_BED_POSITION 30
@@ -334,15 +334,15 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
   // these are the offsets to the prob relative to the extruder tip (Hotend - Probe)
   #define X_PROBE_OFFSET_FROM_EXTRUDER 3
   #define Y_PROBE_OFFSET_FROM_EXTRUDER 74
-  #define Z_PROBE_OFFSET_FROM_EXTRUDER -23.5
+  #define Z_PROBE_OFFSET_FROM_EXTRUDER -25
 
 
-  #define Z_RAISE_BEFORE_HOMING 20       // (in mm) Raise Z before homing (G28) for Probe Clearance.
+  #define Z_RAISE_BEFORE_HOMING 26       // (in mm) Raise Z before homing (G28) for Probe Clearance.
                                         // Be sure you have this distance over your Z_MAX_POS in case
 
   #define XY_TRAVEL_SPEED 8000         // X and Y axis travel speed between probes, in mm/min
 
-  #define Z_RAISE_BEFORE_PROBING 20    //How much the extruder will be raised before traveling to the first probing point.
+  #define Z_RAISE_BEFORE_PROBING 26    //How much the extruder will be raised before traveling to the first probing point.
   #define Z_RAISE_BETWEEN_PROBINGS 5  //How much the extruder will be raised when traveling from between next probing points
 
 
