@@ -1,8 +1,15 @@
 ========================================================
+<<<<<<< HEAD
+Compiling Marlin for the choasinkl printer in a nutshell 
+========================================================
+0. Get a computer running an OS with avr-gcc and avr-libc installed
+1. If you are drunk allready or if you still need to drive skip to step 5 
+=======
 Compiling Marlin for the choasinkl printer in a nutshell
 ========================================================
 0. Get a computer running an OS with avr-gcc and avr-libc installed
 1. If you are drunk allready or if you still need to drive skip to step 5
+>>>>>>> 4cebe4a84e89bad515f5b727292cbf0eb778f8f3
 2. Get beer
 3. Open beer
 4. Drink beer

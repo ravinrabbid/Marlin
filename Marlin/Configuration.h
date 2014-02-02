@@ -323,6 +323,8 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 
 #ifdef ENABLE_AUTO_BED_LEVELING
 
+  #define Z_PROBE_RETRACT_OFFSET 10
+
   // these are the positions on the bed to do the probing
   #define LEFT_PROBE_BED_POSITION 30
   #define RIGHT_PROBE_BED_POSITION 80
@@ -333,6 +335,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
   #define X_PROBE_OFFSET_FROM_EXTRUDER 3
   #define Y_PROBE_OFFSET_FROM_EXTRUDER 74
   #define Z_PROBE_OFFSET_FROM_EXTRUDER -23.5
+
 
   #define Z_RAISE_BEFORE_HOMING 20       // (in mm) Raise Z before homing (G28) for Probe Clearance.
                                         // Be sure you have this distance over your Z_MAX_POS in case
