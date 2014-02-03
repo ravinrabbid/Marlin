@@ -843,7 +843,7 @@ static void set_bed_level_equation(float z_at_xLeft_yFront, float z_at_xRight_yF
     vector_3 yPositive = (xLeftyBack - xLeftyFront).get_normal();
     vector_3 planeNormal = vector_3::cross(xPositive, yPositive).get_normal();
 
-    //planeNormal.debug("planeNormal");
+    planeNormal.debug("planeNormal");
     //yPositive.debug("yPositive");
     plan_bed_level_matrix = matrix_3x3::create_look_at(planeNormal);
     //bedLevel.debug("bedLevel");
@@ -2433,17 +2433,20 @@ void process_commands()
       break;
     #endif // NUM_SERVOS > 0
 
-    #if LARGE_FLASH == true && ( BEEPER > 0 || defined(ULTRALCD) )
-
     #ifdef ENABLE_AUTO_BED_LEVELING
     case 281: // M281 Set z-probe z offset: Z offset
     {
       if(code_seen('Z'))
         zprobe_zoffset = code_value();
+      SERIAL_ECHO_START;
+      SERIAL_ECHO("Set z offset to ");
+      SERIAL_ECHO(zprobe_zoffset);
+      SERIAL_ECHOLN("");
     }
     break;
-    
     #endif //ENABLE_AUTO_BED_LEVELING
+    
+    #if LARGE_FLASH == true && ( BEEPER > 0 || defined(ULTRALCD) )
     case 300: // M300
     {
       int beepS = code_seen('S') ? code_value() : 110;
