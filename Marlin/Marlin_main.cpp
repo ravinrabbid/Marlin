@@ -2434,6 +2434,16 @@ void process_commands()
     #endif // NUM_SERVOS > 0
 
     #if LARGE_FLASH == true && ( BEEPER > 0 || defined(ULTRALCD) )
+
+    #ifdef ENABLE_AUTO_BED_LEVELING
+    case 281: // M281 Set z-probe z offset: Z offset
+    {
+      if(code_seen('Z'))
+        zprobe_zoffset = code_value();
+    }
+    break;
+    
+    #endif //ENABLE_AUTO_BED_LEVELING
     case 300: // M300
     {
       int beepS = code_seen('S') ? code_value() : 110;
