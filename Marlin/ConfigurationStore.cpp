@@ -167,6 +167,12 @@ void Config_PrintSettings()
     SERIAL_ECHOPAIR(" D" ,unscalePID_d(Kd));
     SERIAL_ECHOLN(""); 
 #endif
+#ifdef ENABLE_AUTO_BED_LEVELING
+    SERIAL_ECHO_START;
+    SERIAL_ECHOLNPGM("Probe z offset:");
+    SERIAL_ECHO_START;
+    SERIAL_ECHOPAIR("M281 Z", zprobe_zoffset);
+#endif
 } 
 #endif
 
