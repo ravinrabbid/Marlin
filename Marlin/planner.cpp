@@ -96,6 +96,8 @@ float autotemp_factor=0.1;
 bool autotemp_enabled=false;
 #endif
 
+unsigned char g_uc_extruder_last_move[3] = {0,0,0};
+
 //===========================================================================
 //=================semi-private variables, used in inline  functions    =====
 //===========================================================================
@@ -593,6 +595,7 @@ block->steps_y = labs((target[X_AXIS]-position[X_AXIS]) - (target[Y_AXIS]-positi
 #endif
   block->steps_z = labs(target[Z_AXIS]-position[Z_AXIS]);
   block->steps_e = labs(target[E_AXIS]-position[E_AXIS]);
+  block->steps_e *= volumetric_multiplier[active_extruder];
   block->steps_e *= extrudemultiply;
   block->steps_e /= 100;
   block->step_event_count = max(block->steps_x, max(block->steps_y, max(block->steps_z, block->steps_e)));
@@ -656,12 +659,47 @@ block->steps_y = labs((target[X_AXIS]-position[X_AXIS]) - (target[Y_AXIS]-positi
   if(block->steps_z != 0) enable_z();
 #endif
 
-  // Enable all
+  // Enable extruder(s)
   if(block->steps_e != 0)
   {
-    enable_e0();
-    enable_e1();
-    enable_e2(); 
+    if (DISABLE_INACTIVE_EXTRUDER) //enable only selected extruder
+    {
+
+      if(g_uc_extruder_last_move[0] > 0) g_uc_extruder_last_move[0]--;
+      if(g_uc_extruder_last_move[1] > 0) g_uc_extruder_last_move[1]--;
+      if(g_uc_extruder_last_move[2] > 0) g_uc_extruder_last_move[2]--;
+      
+      switch(extruder)
+      {
+        case 0: 
+          enable_e0(); 
+          g_uc_extruder_last_move[0] = BLOCK_BUFFER_SIZE*2;
+          
+          if(g_uc_extruder_last_move[1] == 0) disable_e1(); 
+          if(g_uc_extruder_last_move[2] == 0) disable_e2(); 
+        break;
+        case 1:
+          enable_e1(); 
+          g_uc_extruder_last_move[1] = BLOCK_BUFFER_SIZE*2;
+          
+          if(g_uc_extruder_last_move[0] == 0) disable_e0(); 
+          if(g_uc_extruder_last_move[2] == 0) disable_e2(); 
+        break;
+        case 2:
+          enable_e2(); 
+          g_uc_extruder_last_move[2] = BLOCK_BUFFER_SIZE*2;
+          
+          if(g_uc_extruder_last_move[0] == 0) disable_e0(); 
+          if(g_uc_extruder_last_move[1] == 0) disable_e1(); 
+        break;        
+      }
+    }
+    else //enable all
+    {
+      enable_e0();
+      enable_e1();
+      enable_e2(); 
+    }
   }
 
   if (block->steps_e == 0)
@@ -682,7 +720,7 @@ block->steps_y = labs((target[X_AXIS]-position[X_AXIS]) - (target[Y_AXIS]-positi
     delta_mm[Y_AXIS] = ((target[X_AXIS]-position[X_AXIS]) - (target[Y_AXIS]-position[Y_AXIS]))/axis_steps_per_unit[Y_AXIS];
   #endif
   delta_mm[Z_AXIS] = (target[Z_AXIS]-position[Z_AXIS])/axis_steps_per_unit[Z_AXIS];
-  delta_mm[E_AXIS] = ((target[E_AXIS]-position[E_AXIS])/axis_steps_per_unit[E_AXIS])*extrudemultiply/100.0;
+  delta_mm[E_AXIS] = ((target[E_AXIS]-position[E_AXIS])/axis_steps_per_unit[E_AXIS])*volumetric_multiplier[active_extruder]*extrudemultiply/100.0;
   if ( block->steps_x <=dropsegments && block->steps_y <=dropsegments && block->steps_z <=dropsegments )
   {
     block->millimeters = fabs(delta_mm[E_AXIS]);
