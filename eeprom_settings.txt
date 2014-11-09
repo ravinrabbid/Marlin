@@ -1,8 +1,38 @@
-M92 X200.00 Y200.00 Z5120.00 E192.00
+;
+; Printrboard version (09-11-2014)
+; Warning Step values all calulated, needs evaluation
+;
+
+; Steps per millimeter
+M92 X197.04 Y197.04 Z2560.00 E192.00
+
+; Maximum feedrate in mm/s
 M203 X100.00 Y100.00 Z2.00 E1.00
+
+; Maximum accelaration in mm/s^2
 M201 X1200 Y1200 Z5 E10000
+
+; Combined maximum acceleration in mm/s^2
+; S travel move, T filament move
 M204 S3000.00 T3000.00
+
+; minimum travel speed
+; S while printing, T travel only, 
+; B minimum segment time,
+; X maximum xy jerk,
+; Z maximum Z jerk,
+; E maximum E jerk
 M205 S0.00 T0.00 B20000 X20.00 Z0.40 E5.00
+
+; Additional homing offset
 M206 X0.00 Y0.00 Z0.00
+
+; Heater PID
 M301 P22.20 I1.08 D114.00
-M281 Z22.40
+
+; Z-Probe offset
+;M281 Z22.40
+
+; Save
+;M500
+
